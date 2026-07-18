@@ -3,344 +3,286 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FORCE ACADEMY — Centro Inteligente de Preparação Militar</title>
+<title>Force Academy — Centro Operacional de Preparação</title>
 <style>
   :root{
-    --bg:#080A0C;
-    --card:#141A20;
-    --sidebar:#0B0F14;
-    --border:#252C35;
-    --text:#FFFFFF;
-    --text-2:#98A2B3;
-    --green:#4ADE80;
-    --gold:#D4AF37;
-    --petrol:#00B4D8;
-    --red:#F87171;
-    --font: 'Sora','Manrope','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --bg:#101113;
+    --surface:#17181B;
+    --surface-2:#1E2023;
+    --border:#2A2C31;
+    --border-soft:#212327;
+    --text:#F2F2F0;
+    --text-dim:#8B8D93;
+    --text-faint:#5B5D63;
+    --accent:#5FE0B5;
+    --accent-ink:#08211A;
+    --accent-dim:rgba(95,224,181,.10);
+    --brass:#C7A25C;
+    --danger:#E5625A;
+
+    --font-display:-apple-system,"SF Pro Display","Segoe UI",Roboto,system-ui,sans-serif;
+    --font-body:-apple-system,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+    --font-mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+
+    --r-sm:6px; --r-md:10px; --r-lg:16px;
+    color-scheme: dark;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  :root[data-theme="light"]{
+    --bg:#F6F6F3;
+    --surface:#FFFFFF;
+    --surface-2:#EFEFEA;
+    --border:#E1E1DA;
+    --border-soft:#EAEAE4;
+    --text:#15161A;
+    --text-dim:#63656C;
+    --text-faint:#9A9CA2;
+    --accent:#0E8F68;
+    --accent-ink:#EAFBF4;
+    --accent-dim:rgba(14,143,104,.09);
+    --brass:#93711F;
+    --danger:#C93D34;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#F6F6F3; --surface:#FFFFFF; --surface-2:#EFEFEA; --border:#E1E1DA; --border-soft:#EAEAE4;
+      --text:#15161A; --text-dim:#63656C; --text-faint:#9A9CA2;
+      --accent:#0E8F68; --accent-ink:#EAFBF4; --accent-dim:rgba(14,143,104,.09); --brass:#93711F; --danger:#C93D34;
+      color-scheme: light;
+    }
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
   body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:var(--font);
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
+    background:var(--bg); color:var(--text); font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; font-size:16px; line-height:1.5;
   }
-  img,svg{max-width:100%; display:block;}
-  a{color:inherit; text-decoration:none;}
-  .container{max-width:1240px; margin:0 auto; padding:0 24px;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-size:12px; letter-spacing:.18em; text-transform:uppercase;
-    color:var(--green); font-weight:600; margin-bottom:18px;
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+  img,svg{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  .container{ max-width:1180px; margin:0 auto; padding:0 28px; }
+  .mono{ font-family:var(--font-mono); }
+  ::selection{ background:var(--accent); color:var(--accent-ink); }
+
+  .label{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.06em;
+    color:var(--accent); text-transform:uppercase; display:inline-flex; align-items:center; gap:8px;
+    margin-bottom:16px;
   }
-  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px 2px rgba(74,222,128,.6);}
-  h1,h2,h3{font-family:var(--font); font-weight:700; letter-spacing:-0.02em;}
+  .label::before{ content:''; width:6px; height:6px; background:var(--accent); border-radius:1px; }
+
+  h1,h2,h3{ font-family:var(--font-display); font-weight:650; letter-spacing:-0.02em; text-wrap:balance; }
+  .tnum{ font-variant-numeric:tabular-nums; }
+
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
-    padding:14px 28px; border-radius:10px; font-weight:600; font-size:15px;
-    cursor:pointer; border:1px solid transparent; transition:all .25s ease;
-    letter-spacing:.02em;
+    padding:13px 22px; border-radius:var(--r-sm); font-weight:600; font-size:14.5px;
+    cursor:pointer; border:1px solid transparent; transition:all .18s ease; font-family:var(--font-body);
   }
-  .btn-primary{
-    background:linear-gradient(135deg,#4ADE80,#22c55e);
-    color:#052e13;
-    box-shadow:0 0 0 rgba(74,222,128,0);
-  }
-  .btn-primary:hover{
-    box-shadow:0 8px 30px -6px rgba(74,222,128,.55);
-    transform:translateY(-2px);
-  }
-  .btn-ghost{
-    background:rgba(255,255,255,.03);
-    border-color:var(--border);
-    color:var(--text);
-  }
-  .btn-ghost:hover{ border-color:rgba(74,222,128,.5); background:rgba(74,222,128,.06); }
+  .btn-primary{ background:var(--accent); color:var(--accent-ink); }
+  .btn-primary:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .btn-ghost{ background:transparent; border-color:var(--border); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--text-dim); }
 
-  /* ===== NAV ===== */
+  /* NAV */
   header{
     position:fixed; top:0; left:0; right:0; z-index:100;
-    backdrop-filter:blur(16px);
-    background:rgba(8,10,12,.6);
-    border-bottom:1px solid var(--border);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--border-soft);
   }
-  .nav{ display:flex; align-items:center; justify-content:space-between; height:76px; }
-  .logo{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:18px; letter-spacing:.04em; }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .logo{ display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:15px; letter-spacing:-0.01em; }
   .logo .mark{
-    width:34px; height:34px; border-radius:8px;
-    background:linear-gradient(135deg,#4ADE80,#00B4D8);
-    display:flex; align-items:center; justify-content:center; font-size:16px; color:#04140a; font-weight:900;
+    width:22px; height:22px; border:1.5px solid var(--text); border-radius:4px;
+    display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:11px; font-weight:700;
   }
-  .nav-links{ display:flex; gap:32px; font-size:14px; color:var(--text-2); }
+  .nav-links{ display:flex; gap:30px; font-size:13.5px; color:var(--text-dim); }
+  .nav-links a{ transition:color .15s; }
   .nav-links a:hover{ color:var(--text); }
-  @media (max-width:860px){ .nav-links{ display:none; } }
+  .theme-toggle{
+    width:32px; height:32px; border:1px solid var(--border); border-radius:var(--r-sm);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:13px; color:var(--text-dim);
+    background:var(--surface);
+  }
+  .theme-toggle:hover{ color:var(--text); border-color:var(--text-dim); }
+  @media (max-width:900px){ .nav-links{ display:none; } }
 
-  /* ===== HERO ===== */
-  .hero{
-    position:relative; min-height:100vh; display:flex; align-items:center; justify-content:center;
-    text-align:center; padding:160px 24px 100px;
-    background:
-      radial-gradient(ellipse at 50% 0%, rgba(74,222,128,.08), transparent 60%),
-      radial-gradient(ellipse at 20% 80%, rgba(0,180,216,.08), transparent 55%),
-      linear-gradient(180deg, #05070a 0%, #080A0C 55%, #080A0C 100%);
-    overflow:hidden;
+  /* HERO */
+  .hero{ padding:150px 0 100px; border-bottom:1px solid var(--border-soft); }
+  .hero-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+  .hero-copy h1{ font-size:clamp(38px,4.6vw,58px); line-height:1.03; }
+  .hero-copy .sub{ margin-top:20px; font-size:17px; color:var(--text-dim); max-width:440px; line-height:1.65; }
+  .hero-cta{ margin-top:36px; display:flex; gap:12px; flex-wrap:wrap; }
+  .hero-readout{
+    margin-top:48px; display:flex; gap:0; border-top:1px solid var(--border-soft); padding-top:24px;
   }
-  .hero::before{
-    content:''; position:absolute; inset:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-    background-size:48px 48px;
-    mask-image:radial-gradient(ellipse at 50% 30%, black, transparent 70%);
-  }
-  .hero-scan{
-    position:absolute; inset:0; pointer-events:none;
-    background:linear-gradient(180deg, transparent, rgba(74,222,128,.04), transparent);
-    animation:scan 6s linear infinite;
-  }
-  @keyframes scan{ 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
-  .hero-content{ position:relative; z-index:2; max-width:820px; }
-  .hero h1{
-    font-size:clamp(48px,9vw,104px); line-height:0.95;
-    background:linear-gradient(180deg,#fff, #b7c2cc);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  .hero .sub{
-    margin-top:22px; font-size:clamp(15px,2vw,19px); color:var(--text-2);
-    max-width:560px; margin-left:auto; margin-right:auto;
-  }
-  .hero .mission-line{
-    margin-top:8px; color:var(--green); font-weight:600; font-size:15px; letter-spacing:.03em;
-  }
-  .hero-cta{ margin-top:44px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-  .hero-stats{
-    margin-top:80px; display:flex; gap:0; justify-content:center; flex-wrap:wrap;
-    border-top:1px solid var(--border); padding-top:28px;
-  }
-  .hero-stats div{ padding:0 32px; text-align:center; }
-  .hero-stats b{ display:block; font-size:26px; color:var(--gold); }
-  .hero-stats span{ font-size:12px; color:var(--text-2); letter-spacing:.05em; text-transform:uppercase; }
+  .hero-readout div{ padding-right:32px; margin-right:32px; border-right:1px solid var(--border-soft); }
+  .hero-readout div:last-child{ border-right:none; margin-right:0; padding-right:0; }
+  .hero-readout b{ display:block; font-family:var(--font-mono); font-size:20px; font-weight:600; }
+  .hero-readout span{ font-size:11.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono); }
 
-  /* ===== SECTION SHARED ===== */
-  section{ padding:120px 0; position:relative; }
-  .section-head{ text-align:center; max-width:680px; margin:0 auto 64px; }
-  .section-head h2{ font-size:clamp(30px,5vw,48px); }
-  .section-head p{ margin-top:16px; color:var(--text-2); font-size:16px; line-height:1.6; }
+  /* HERO PANEL (product shot instead of stock photo) */
+  .panel-wrap{ perspective:1200px; }
+  .panel{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg);
+    box-shadow:0 30px 80px -25px rgba(0,0,0,.5);
+    transform:rotateY(-6deg) rotateX(2deg);
+    transition:transform .5s ease;
+  }
+  .panel:hover{ transform:rotateY(-2deg) rotateX(0deg); }
+  .panel-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border-soft); }
+  .panel-top .id{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); }
+  .panel-top .status{ display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; color:var(--accent); }
+  .panel-top .status::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  .panel-body{ padding:22px; }
+  .panel-body .greet{ font-size:11px; color:var(--text-faint); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.05em; }
+  .panel-body h3{ margin-top:6px; font-size:20px; }
+  .task-row{
+    display:flex; align-items:center; justify-content:space-between; padding:11px 0;
+    border-bottom:1px solid var(--border-soft); font-size:13.5px;
+  }
+  .task-row:last-child{ border-bottom:none; }
+  .task-row .done{ color:var(--accent); font-family:var(--font-mono); font-size:12px; }
+  .panel-stats{ margin-top:18px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .pstat{ border:1px solid var(--border-soft); border-radius:var(--r-sm); padding:12px; background:var(--surface-2); }
+  .pstat span{ font-size:10px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono); }
+  .pstat b{ display:block; margin-top:6px; font-size:16px; font-family:var(--font-mono); }
+  @media (max-width:860px){ .hero-grid{ grid-template-columns:1fr; } .panel{ transform:none; } .hero-readout{ flex-wrap:wrap; gap:20px; } .hero-readout div{ border-right:none; margin-right:0; padding-right:0; } }
 
-  /* ===== DASHBOARD PREVIEW ===== */
-  .op-shell{
-    display:grid; grid-template-columns:240px 1fr; gap:0;
-    border:1px solid var(--border); border-radius:20px; overflow:hidden;
-    background:var(--card); box-shadow:0 40px 100px -30px rgba(0,0,0,.7);
-  }
-  .op-sidebar{ background:var(--sidebar); border-right:1px solid var(--border); padding:24px 18px; display:flex; flex-direction:column; }
-  .op-sidebar .item{
-    display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:10px;
-    color:var(--text-2); font-size:14px; margin-bottom:4px; transition:.2s;
-  }
-  .op-sidebar .item.active{ background:rgba(74,222,128,.1); color:var(--green); font-weight:600; }
-  .op-sidebar .rank-box{
-    margin-top:auto; border:1px solid var(--border); border-radius:12px; padding:14px;
-    background:rgba(255,255,255,.02);
-  }
-  .op-sidebar .rank-box b{ color:var(--gold); font-size:13px; }
-  .op-sidebar .rank-box .bar{ height:5px; border-radius:3px; background:#1c232b; margin-top:10px; overflow:hidden; }
-  .op-sidebar .rank-box .bar i{ display:block; height:100%; width:64%; background:linear-gradient(90deg,#4ADE80,#00B4D8); }
-  .op-main{ padding:36px 40px; }
-  .op-main h3{ font-size:26px; }
-  .op-main .greet{ color:var(--text-2); margin-top:6px; font-size:14px; }
-  .op-tasks{ margin-top:26px; display:flex; flex-direction:column; gap:10px; }
-  .op-tasks .t{ display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text-2); }
-  .op-tasks .t b{ color:var(--green); }
-  .op-cards{ margin-top:30px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  .stat-card{
-    border:1px solid var(--border); border-radius:14px; padding:18px;
-    background:linear-gradient(160deg, rgba(255,255,255,.03), transparent);
-  }
-  .stat-card span{ font-size:12px; color:var(--text-2); text-transform:uppercase; letter-spacing:.05em; }
-  .stat-card b{ display:block; margin-top:8px; font-size:22px; }
-  .stat-card.green b{ color:var(--green); }
-  .stat-card.gold b{ color:var(--gold); }
-  .stat-card.petrol b{ color:var(--petrol); }
-  @media (max-width:760px){
-    .op-shell{ grid-template-columns:1fr; }
-    .op-sidebar{ display:none; }
-    .op-cards{ grid-template-columns:1fr 1fr; }
-  }
+  /* SECTION SHARED */
+  section{ padding:100px 0; border-bottom:1px solid var(--border-soft); }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:56px; flex-wrap:wrap; }
+  .section-head h2{ font-size:clamp(26px,3.4vw,36px); max-width:520px; }
+  .section-head p{ max-width:340px; color:var(--text-dim); font-size:14.5px; line-height:1.6; }
 
-  /* ===== MISSIONS GRID ===== */
-  .missions-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
-  .mission-card{
-    border:1px solid var(--border); border-radius:16px; padding:26px;
-    background:var(--card); transition:.3s ease; position:relative; overflow:hidden;
+  /* MISSIONS TABLE-LIST (not cards-with-glow cliché — a clean data list) */
+  .mission-list{ border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden; }
+  .mission-row{
+    display:grid; grid-template-columns:1.4fr .8fr .8fr .8fr 1.2fr; align-items:center; gap:16px;
+    padding:18px 22px; border-bottom:1px solid var(--border-soft); font-size:13.5px;
+    transition:background .15s;
   }
-  .mission-card:hover{ transform:translateY(-4px); border-color:rgba(74,222,128,.5); box-shadow:0 20px 60px -20px rgba(74,222,128,.25); }
-  .mission-card .tag{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--petrol); font-weight:700; }
-  .mission-card h4{ margin-top:10px; font-size:19px; }
-  .mission-card .meta{ margin-top:16px; display:flex; justify-content:space-between; font-size:13px; color:var(--text-2); }
-  .mission-card .progress{ margin-top:14px; height:6px; border-radius:3px; background:#1c232b; overflow:hidden; }
-  .mission-card .progress i{ display:block; height:100%; background:linear-gradient(90deg,#4ADE80,#00B4D8); }
+  .mission-row:last-child{ border-bottom:none; }
+  .mission-row:hover{ background:var(--surface); }
+  .mission-row.head{ font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-faint); background:var(--surface-2); }
+  .mission-row .name{ font-weight:600; display:flex; flex-direction:column; gap:2px; }
+  .mission-row .name small{ font-weight:400; color:var(--text-faint); font-size:11.5px; font-family:var(--font-mono); }
+  .mission-row .num{ font-family:var(--font-mono); color:var(--text-dim); }
+  .bar{ height:4px; border-radius:2px; background:var(--border); overflow:hidden; }
+  .bar i{ display:block; height:100%; background:var(--accent); }
+  @media (max-width:760px){ .mission-row{ grid-template-columns:1fr; gap:6px; } .mission-row.head{ display:none; } .mission-row .num::before{ content:attr(data-label) ": "; color:var(--text-faint); } }
 
-  /* ===== BANCO DE QUESTOES CARDS ===== */
-  .exam-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
-  .exam-card{
-    border:1px solid var(--border); border-radius:16px; padding:28px 24px;
-    background:radial-gradient(circle at 30% 0%, rgba(74,222,128,.06), transparent 60%), var(--card);
-    text-align:center; transition:.3s;
-  }
-  .exam-card:hover{ transform:translateY(-6px); border-color:var(--green); box-shadow:0 25px 60px -20px rgba(74,222,128,.35); }
-  .exam-card h4{ font-size:20px; letter-spacing:.05em; }
-  .ring{
-    width:96px; height:96px; border-radius:50%; margin:20px auto;
-    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px;
-    background:conic-gradient(var(--green) calc(var(--p)*1%), #1c232b 0);
-    position:relative;
-  }
-  .ring::before{ content:''; position:absolute; inset:8px; border-radius:50%; background:var(--card); }
-  .ring span{ position:relative; z-index:1; }
-  .exam-card .cta{ font-size:13px; color:var(--green); font-weight:600; margin-top:6px; }
+  /* EXAM CARDS — flat data cards, no neon glow */
+  .exam-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden; }
+  .exam-card{ background:var(--surface); padding:26px 24px; transition:background .15s; }
+  .exam-card:hover{ background:var(--surface-2); }
+  .exam-card .top{ display:flex; justify-content:space-between; align-items:baseline; }
+  .exam-card h4{ font-family:var(--font-display); font-size:17px; font-weight:650; }
+  .exam-card .pct{ font-family:var(--font-mono); font-size:15px; color:var(--accent); }
+  .exam-card .bar{ margin-top:16px; }
+  .exam-card .cta{ margin-top:16px; font-size:12.5px; color:var(--text-dim); font-family:var(--font-mono); }
+  .exam-card:hover .cta{ color:var(--accent); }
 
-  /* ===== PATENTES ===== */
-  .ranks-strip{ display:flex; gap:14px; overflow-x:auto; padding:10px 4px 20px; scrollbar-width:none; }
-  .ranks-strip::-webkit-scrollbar{ display:none; }
-  .rank-chip{
-    flex:0 0 auto; min-width:150px; border:1px solid var(--border); border-radius:14px; padding:18px;
-    background:var(--card); text-align:center;
-  }
-  .rank-chip .insig{
-    width:44px; height:44px; margin:0 auto 12px; border-radius:50%;
-    background:linear-gradient(135deg,var(--gold),#8a6d1f);
-    display:flex; align-items:center; justify-content:center; font-size:18px;
-  }
-  .rank-chip.locked{ opacity:.4; }
-  .rank-chip b{ font-size:13px; display:block; }
+  /* RANK LADDER — table-like progression, not badge chips */
+  .ladder{ display:flex; flex-direction:column; border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden; }
+  .rung{ display:grid; grid-template-columns:40px 1fr auto; align-items:center; gap:16px; padding:13px 20px; border-bottom:1px solid var(--border-soft); font-size:13.5px; }
+  .rung:last-child{ border-bottom:none; }
+  .rung .idx{ font-family:var(--font-mono); color:var(--text-faint); font-size:12px; }
+  .rung .tick{ width:8px; height:8px; border-radius:50%; background:var(--border); justify-self:start; }
+  .rung.current{ background:var(--accent-dim); }
+  .rung.current .tick{ background:var(--accent); box-shadow:0 0 0 3px var(--accent-dim); }
+  .rung.done .tick{ background:var(--text-dim); }
+  .rung .name{ font-weight:600; }
+  .rung.locked .name{ color:var(--text-faint); font-weight:400; }
+  .rung .status{ font-family:var(--font-mono); font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.04em; }
+  .rung.current .status{ color:var(--accent); }
+  .ladder-scroll{ max-height:420px; overflow-y:auto; }
 
-  /* ===== AI SECTION ===== */
-  .ai-panel{
-    border:1px solid var(--border); border-radius:20px; overflow:hidden; background:var(--card);
-    display:grid; grid-template-columns:1fr 1fr; box-shadow:0 40px 100px -30px rgba(0,0,0,.6);
-  }
-  .ai-copy{ padding:56px; display:flex; flex-direction:column; justify-content:center; }
-  .ai-copy h3{ font-size:32px; }
-  .ai-copy p{ margin-top:16px; color:var(--text-2); line-height:1.7; }
-  .ai-copy ul{ margin-top:22px; list-style:none; display:flex; flex-direction:column; gap:10px; }
-  .ai-copy li{ font-size:14px; color:var(--text-2); display:flex; gap:10px; }
-  .ai-copy li::before{ content:'▸'; color:var(--green); }
-  .ai-chat{ background:var(--sidebar); border-left:1px solid var(--border); padding:28px; display:flex; flex-direction:column; gap:14px; }
-  .msg{ max-width:85%; padding:12px 16px; border-radius:12px; font-size:13.5px; line-height:1.5; }
-  .msg.user{ align-self:flex-end; background:linear-gradient(135deg,#4ADE80,#22c55e); color:#052e13; font-weight:600; }
-  .msg.ai{ align-self:flex-start; background:#161d24; border:1px solid var(--border); color:var(--text-2); }
+  /* AI PANEL */
+  .ai-panel{ display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden; }
+  .ai-copy{ padding:48px; display:flex; flex-direction:column; justify-content:center; }
+  .ai-copy h3{ font-size:28px; }
+  .ai-copy p{ margin-top:14px; color:var(--text-dim); line-height:1.7; font-size:15px; }
+  .ai-copy ul{ margin-top:20px; list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .ai-copy li{ font-size:13.5px; color:var(--text-dim); display:flex; gap:10px; font-family:var(--font-mono); }
+  .ai-copy li::before{ content:'—'; color:var(--accent); }
+  .ai-chat{ background:var(--surface); border-left:1px solid var(--border); padding:28px; display:flex; flex-direction:column; gap:12px; justify-content:center; }
+  .msg{ max-width:88%; padding:12px 15px; border-radius:var(--r-sm); font-size:13px; line-height:1.55; }
+  .msg.user{ align-self:flex-end; background:var(--accent); color:var(--accent-ink); font-weight:500; }
+  .msg.ai{ align-self:flex-start; background:var(--surface-2); border:1px solid var(--border-soft); color:var(--text-dim); font-family:var(--font-mono); font-size:12.5px; }
   @media (max-width:820px){ .ai-panel{ grid-template-columns:1fr; } .ai-chat{ border-left:none; border-top:1px solid var(--border); } }
 
-  /* ===== HALL DA HONRA ===== */
-  .honor-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; }
-  .honor-card{ border:1px solid var(--border); border-radius:16px; overflow:hidden; background:var(--card); }
-  .honor-photo{ height:180px; background:linear-gradient(135deg,#1c232b,#0d1216); position:relative; }
-  .honor-photo::after{ content:'★'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:36px; color:var(--gold); opacity:.5; }
-  .honor-body{ padding:18px 20px; }
-  .honor-body .badge{ font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; font-weight:700; }
-  .honor-body h4{ margin-top:6px; font-size:17px; }
-  .honor-body p{ margin-top:8px; font-size:13px; color:var(--text-2); line-height:1.5; }
+  /* HALL DA HONRA */
+  .honor-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r-md); overflow:hidden; }
+  .honor-card{ background:var(--surface); padding:24px; display:flex; flex-direction:column; gap:14px; }
+  .honor-avatar{ width:40px; height:40px; border-radius:50%; background:var(--surface-2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-weight:700; font-size:14px; color:var(--brass); }
+  .honor-card .badge{ font-size:11px; color:var(--brass); text-transform:uppercase; letter-spacing:.06em; font-weight:700; font-family:var(--font-mono); }
+  .honor-card h4{ font-size:16.5px; font-family:var(--font-display); }
+  .honor-card p{ font-size:13px; color:var(--text-dim); line-height:1.55; }
 
-  /* ===== DEVICE SHOWCASE ===== */
-  .showcase{ background:radial-gradient(ellipse at 50% 20%, rgba(0,180,216,.06), transparent 60%); }
-  .device-switch{
-    display:flex; justify-content:center; margin-bottom:64px;
-  }
-  .switch-track{
-    display:flex; gap:4px; padding:5px; border-radius:14px;
-    background:rgba(255,255,255,.03); border:1px solid var(--border);
-    backdrop-filter:blur(10px);
-  }
+  /* DEVICE SHOWCASE */
+  .device-switch{ display:flex; justify-content:center; margin-bottom:56px; }
+  .switch-track{ display:inline-flex; gap:2px; padding:3px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--border); }
   .switch-btn{
-    position:relative; padding:11px 26px; border-radius:10px; font-size:14px; font-weight:600;
-    color:var(--text-2); cursor:pointer; display:flex; align-items:center; gap:8px;
-    transition:color .3s ease; background:transparent; border:none; font-family:var(--font);
+    position:relative; padding:10px 22px; border-radius:calc(var(--r-md) - 3px); font-size:13.5px; font-weight:600;
+    color:var(--text-dim); cursor:pointer; border:none; font-family:var(--font-body); background:transparent;
+    transition:color .25s ease; z-index:1;
   }
-  .switch-btn.active{ color:#052e13; }
-  .switch-btn .glow{
-    position:absolute; inset:0; border-radius:10px; z-index:-1; opacity:0; transition:opacity .35s ease;
-    background:linear-gradient(135deg,#4ADE80,#22c55e); box-shadow:0 0 24px 2px rgba(74,222,128,.5);
-  }
+  .switch-btn.active{ color:var(--accent-ink); }
+  .switch-btn .glow{ position:absolute; inset:0; border-radius:calc(var(--r-md) - 3px); z-index:-1; opacity:0; transition:opacity .3s ease; background:var(--accent); }
   .switch-btn.active .glow{ opacity:1; }
 
-  .stage{ position:relative; display:flex; align-items:center; justify-content:center; min-height:640px; perspective:1400px; }
-
-  .device{
-    position:absolute; transition:transform .7s cubic-bezier(.22,1,.36,1), opacity .6s ease, filter .6s ease;
-  }
-  .device.hidden-left{ transform:translateX(-120%) rotateY(20deg) scale(.85); opacity:0; filter:blur(6px); pointer-events:none; }
-  .device.hidden-right{ transform:translateX(120%) rotateY(-20deg) scale(.85); opacity:0; filter:blur(6px); pointer-events:none; }
+  .stage{ position:relative; display:flex; align-items:center; justify-content:center; min-height:600px; perspective:1400px; }
+  .device{ position:absolute; transition:transform .6s cubic-bezier(.22,1,.36,1), opacity .5s ease, filter .5s ease; }
+  .device.hidden-left{ transform:translateX(-110%) rotateY(14deg) scale(.9); opacity:0; filter:blur(4px); pointer-events:none; }
+  .device.hidden-right{ transform:translateX(110%) rotateY(-14deg) scale(.9); opacity:0; filter:blur(4px); pointer-events:none; }
   .device.shown{ transform:translateX(0) rotateY(0) scale(1); opacity:1; filter:blur(0); }
 
-  /* Laptop mock */
-  .laptop{ width:min(880px,88vw); }
-  .laptop-screen{
-    border:10px solid #1a1f26; border-bottom:none; border-radius:16px 16px 0 0;
-    background:#000; padding:14px; box-shadow:0 40px 90px -20px rgba(0,0,0,.7);
-  }
-  .laptop-cam{ width:6px; height:6px; border-radius:50%; background:#333; margin:0 auto 10px; }
-  .laptop-base{
-    height:16px; background:linear-gradient(180deg,#2a3038,#12161b);
-    border-radius:0 0 10px 10px; position:relative;
-  }
-  .laptop-base::after{ content:''; position:absolute; left:50%; top:0; transform:translateX(-50%); width:90px; height:5px; background:#0a0d10; border-radius:0 0 6px 6px; }
+  .laptop{ width:min(820px,86vw); }
+  .laptop-screen{ border:9px solid var(--surface-2); border-bottom:none; border-radius:12px 12px 0 0; background:var(--bg); padding:0; box-shadow:0 35px 80px -25px rgba(0,0,0,.5); }
+  .laptop-base{ height:14px; background:var(--surface-2); border-radius:0 0 8px 8px; position:relative; }
+  .laptop-base::after{ content:''; position:absolute; left:50%; top:0; transform:translateX(-50%); width:80px; height:4px; background:var(--border); border-radius:0 0 4px 4px; }
 
-  /* Phone mock */
-  .phone{ width:min(300px,72vw); }
-  .phone-body{
-    border:10px solid #1a1f26; border-radius:42px; background:#000; padding:8px;
-    box-shadow:0 40px 90px -20px rgba(0,0,0,.7); position:relative;
-  }
-  .phone-notch{
-    position:absolute; top:14px; left:50%; transform:translateX(-50%);
-    width:80px; height:20px; background:#1a1f26; border-radius:12px; z-index:2;
-  }
-  .screen-frame{
-    background:var(--bg); border-radius:26px; overflow:hidden; aspect-ratio:9/19.5;
-    display:flex; flex-direction:column; position:relative;
-  }
-  .laptop .screen-frame{ border-radius:6px; aspect-ratio:16/10; }
+  .phone{ width:min(280px,70vw); }
+  .phone-body{ border:9px solid var(--surface-2); border-radius:36px; background:var(--bg); padding:6px; box-shadow:0 35px 80px -25px rgba(0,0,0,.5); position:relative; }
+  .phone-notch{ position:absolute; top:12px; left:50%; transform:translateX(-50%); width:70px; height:18px; background:var(--surface-2); border-radius:10px; z-index:2; }
 
+  .screen-frame{ background:var(--bg); border-radius:22px; overflow:hidden; aspect-ratio:9/19.5; position:relative; }
+  .laptop .screen-frame{ border-radius:4px; aspect-ratio:16/10; }
   .screen-crossfade{ position:relative; width:100%; height:100%; }
-  .scr{
-    position:absolute; inset:0; opacity:0; transition:opacity .5s ease; display:flex; flex-direction:column;
-  }
+  .scr{ position:absolute; inset:0; opacity:0; transition:opacity .45s ease; display:flex; flex-direction:column; }
   .scr.on{ opacity:1; }
 
-  /* mini desktop screen contents */
-  .mini-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); }
-  .mini-top .brand{ font-size:12px; font-weight:800; letter-spacing:.06em; }
-  .mini-top .dot{ width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); }
-  .mini-body{ flex:1; padding:20px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; align-content:start; }
-  .mini-tile{ border:1px solid var(--border); border-radius:10px; padding:12px; background:rgba(255,255,255,.02); }
-  .mini-tile span{ font-size:9px; color:var(--text-2); text-transform:uppercase; }
-  .mini-tile b{ display:block; font-size:15px; margin-top:6px; }
-  .mini-wide{ grid-column:1/-1; height:70px; border:1px solid var(--border); border-radius:10px; background:linear-gradient(90deg, rgba(74,222,128,.15), transparent); }
+  .mini-top{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid var(--border-soft); }
+  .mini-top .brand{ font-size:11px; font-weight:700; letter-spacing:.05em; font-family:var(--font-mono); }
+  .mini-top .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  .mini-body{ flex:1; padding:18px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; align-content:start; }
+  .mini-tile{ border:1px solid var(--border-soft); border-radius:8px; padding:11px; background:var(--surface); }
+  .mini-tile span{ font-size:9px; color:var(--text-faint); text-transform:uppercase; font-family:var(--font-mono); }
+  .mini-tile b{ display:block; font-size:14px; margin-top:5px; font-family:var(--font-mono); }
+  .mini-wide{ grid-column:1/-1; height:60px; border:1px solid var(--border-soft); border-radius:8px; background:linear-gradient(90deg, var(--accent-dim), transparent); }
 
-  /* mini phone screen contents */
-  .mini-phone-top{ padding:22px 18px 10px; }
-  .mini-phone-top .greet{ font-size:11px; color:var(--text-2); }
-  .mini-phone-top .name{ font-size:16px; font-weight:700; margin-top:4px; }
-  .mini-phone-body{ flex:1; padding:0 18px; display:flex; flex-direction:column; gap:10px; }
-  .mini-row{ border:1px solid var(--border); border-radius:10px; padding:12px; display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,.02); }
-  .mini-row span{ font-size:11px; color:var(--text-2); }
-  .mini-row b{ font-size:12px; color:var(--green); }
-  .mini-navbar{ margin-top:auto; display:flex; justify-content:space-around; padding:14px 0; border-top:1px solid var(--border); }
-  .mini-navbar i{ width:16px; height:16px; border-radius:4px; background:#1c232b; }
-  .mini-navbar i.on{ background:var(--green); }
+  .mini-phone-top{ padding:20px 16px 8px; }
+  .mini-phone-top .greet{ font-size:10px; color:var(--text-faint); font-family:var(--font-mono); text-transform:uppercase; }
+  .mini-phone-top .name{ font-size:15px; font-weight:700; margin-top:4px; font-family:var(--font-display); }
+  .mini-phone-body{ flex:1; padding:0 16px; display:flex; flex-direction:column; gap:8px; }
+  .mini-row{ border:1px solid var(--border-soft); border-radius:8px; padding:11px; display:flex; justify-content:space-between; align-items:center; background:var(--surface); }
+  .mini-row span{ font-size:11px; color:var(--text-dim); }
+  .mini-row b{ font-size:11.5px; color:var(--accent); font-family:var(--font-mono); }
+  .mini-navbar{ margin-top:auto; display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid var(--border-soft); }
+  .mini-navbar i{ width:14px; height:3px; border-radius:2px; background:var(--border); }
+  .mini-navbar i.on{ background:var(--accent); }
 
-  .screen-dots{ display:flex; gap:8px; justify-content:center; margin-top:28px; }
-  .screen-dots i{ width:7px; height:7px; border-radius:50%; background:#252c35; cursor:pointer; transition:.2s; }
-  .screen-dots i.on{ background:var(--green); width:22px; border-radius:4px; }
+  .screen-dots{ display:flex; gap:7px; justify-content:center; margin-top:26px; }
+  .screen-dots i{ width:6px; height:6px; border-radius:50%; background:var(--border); cursor:pointer; transition:.2s; display:block; }
+  .screen-dots i.on{ background:var(--accent); width:20px; border-radius:3px; }
 
-  .showcase-caption{ text-align:center; margin-top:38px; font-size:13px; color:var(--text-2); letter-spacing:.03em; }
-  .showcase-caption b{ color:var(--green); }
+  .showcase-caption{ text-align:center; margin-top:34px; font-size:12.5px; color:var(--text-faint); font-family:var(--font-mono); }
+  .showcase-caption b{ color:var(--accent); }
 
-  footer{ border-top:1px solid var(--border); padding:50px 0; text-align:center; color:var(--text-2); font-size:13px; }
-  footer .logo{ justify-content:center; margin-bottom:14px; }
+  footer{ padding:44px 0; text-align:center; color:var(--text-faint); font-size:12.5px; font-family:var(--font-mono); }
+  footer .logo{ justify-content:center; margin-bottom:12px; color:var(--text-dim); }
 </style>
 </head>
 <body>
@@ -355,26 +297,51 @@
       <a href="#showcase">Plataforma</a>
       <a href="#honra">Hall da Honra</a>
     </nav>
-    <a href="#showcase" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">Iniciar Operação</a>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Alternar tema">◐</button>
+      <a href="#showcase" class="btn btn-primary" style="padding:9px 18px; font-size:13px;">Iniciar Operação</a>
+    </div>
   </div>
 </header>
 
 <section class="hero">
-  <div class="hero-scan"></div>
-  <div class="hero-content">
-    <div class="eyebrow">Sistema Inteligente de Preparação Militar</div>
-    <h1>FORCE<br/>ACADEMY</h1>
-    <p class="sub">Centro Inteligente de Preparação Militar. Disciplina, estratégia e tecnologia a serviço da sua aprovação.</p>
-    <p class="mission-line">Sua missão começa agora.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#showcase">INICIAR OPERAÇÃO</a>
-      <a class="btn btn-ghost" href="#operacoes">Conhecer o sistema</a>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="label">Sessão do Operador — Ativa</div>
+      <h1>O sistema operacional da sua aprovação.</h1>
+      <p class="sub">Missões diárias, banco de questões e um assistente tático que acompanha cada decisão da sua preparação — em um único painel de comando.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#showcase">Iniciar Operação</a>
+        <a class="btn btn-ghost" href="#operacoes">Ver o painel</a>
+      </div>
+      <div class="hero-readout">
+        <div><b class="tnum">233.412</b><span>Aprovados</span></div>
+        <div><b class="tnum">67%</b><span>Carreiras policiais</span></div>
+        <div><b class="tnum">128d</b><span>Sequência média</span></div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div><b>233.000+</b><span>Operadores Aprovados</span></div>
-      <div><b>67%</b><span>Carreiras Policiais</span></div>
-      <div><b>128</b><span>Dias de Sequência Média</span></div>
-      <div><b>15</b><span>Patentes Disponíveis</span></div>
+    <div class="panel-wrap">
+      <div class="panel">
+        <div class="panel-top">
+          <span class="id mono">SESSÃO · 0X41A2</span>
+          <span class="status">ONLINE</span>
+        </div>
+        <div class="panel-body">
+          <div class="greet">Missão do dia</div>
+          <h3>Bom dia, Capitão.</h3>
+          <div style="margin-top:16px;">
+            <div class="task-row"><span>Português</span><span class="done">CONCLUÍDO</span></div>
+            <div class="task-row"><span>Direito Constitucional</span><span class="done">CONCLUÍDO</span></div>
+            <div class="task-row"><span>Informática</span><span class="done">CONCLUÍDO</span></div>
+            <div class="task-row"><span>80 Questões</span><span class="mono" style="color:var(--text-faint); font-size:12px;">EM CURSO</span></div>
+          </div>
+          <div class="panel-stats">
+            <div class="pstat"><span>Patente</span><b>Capitão</b></div>
+            <div class="pstat"><span>XP</span><b class="tnum">18.250</b></div>
+            <div class="pstat"><span>Sequência</span><b class="tnum">128d</b></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -382,46 +349,40 @@
 <section id="operacoes">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">Centro de Operações</div>
-      <h2>Bom dia, Operador.</h2>
-      <p>Um painel de comando único, com sua missão do dia, seu progresso e sua patente sempre à vista.</p>
+      <h2>Um painel, todas as suas frentes de estudo.</h2>
+      <p>Concurso, patente, XP e progresso diário reunidos em uma única tela de comando.</p>
     </div>
-    <div class="op-shell">
-      <div class="op-sidebar">
-        <div class="item active">🏠 Centro de Operações</div>
-        <div class="item">🎯 Missões</div>
-        <div class="item">📝 Banco de Questões</div>
-        <div class="item">🤖 Force AI</div>
-        <div class="item">📅 Planejamento</div>
-        <div class="item">🧠 Flashcards</div>
-        <div class="item">📖 Editais</div>
-        <div class="item">🏃 Academia TAF</div>
-        <div class="item">📊 Evolução</div>
-        <div class="item">🏆 Ranking</div>
-        <div class="item">🎖 Hall da Honra</div>
-        <div class="item">👤 Perfil</div>
-        <div class="rank-box">
-          <b>CAPITÃO</b>
-          <div style="font-size:11px;color:var(--text-2); margin-top:4px;">18.250 XP · Sequência 128 dias</div>
-          <div class="bar"><i></i></div>
-        </div>
+    <div class="mission-list">
+      <div class="mission-row head">
+        <span>Concurso</span><span>Aproveitamento</span><span>Questões</span><span>Tempo médio</span><span>Progresso</span>
       </div>
-      <div class="op-main">
-        <h3>Centro de Operações</h3>
-        <div class="greet">Hoje sua missão é:</div>
-        <div class="op-tasks">
-          <div class="t"><b>✔</b> Português</div>
-          <div class="t"><b>✔</b> Direito Constitucional</div>
-          <div class="t"><b>✔</b> Informática</div>
-          <div class="t"><b>✔</b> 80 Questões</div>
-          <div class="t"><b>✔</b> Revisão</div>
-        </div>
-        <a href="#missoes" class="btn btn-primary" style="margin-top:26px;">INICIAR MISSÃO</a>
-        <div class="op-cards">
-          <div class="stat-card green"><span>Status Operacional</span><b>ONLINE</b></div>
-          <div class="stat-card petrol"><span>Force AI</span><b>ATIVA</b></div>
-          <div class="stat-card gold"><span>Concurso</span><b>PMMA</b></div>
-        </div>
+      <div class="mission-row">
+        <div class="name">PMMA <small>Polícia Militar do Maranhão</small></div>
+        <span class="num" data-label="Aprov.">82%</span>
+        <span class="num" data-label="Quest.">1.240</span>
+        <span class="num" data-label="Tempo">38min</span>
+        <div class="bar"><i style="width:82%"></i></div>
+      </div>
+      <div class="mission-row">
+        <div class="name">CBMMA <small>Corpo de Bombeiros</small></div>
+        <span class="num" data-label="Aprov.">61%</span>
+        <span class="num" data-label="Quest.">890</span>
+        <span class="num" data-label="Tempo">41min</span>
+        <div class="bar"><i style="width:61%"></i></div>
+      </div>
+      <div class="mission-row">
+        <div class="name">PRF <small>Polícia Rodoviária Federal</small></div>
+        <span class="num" data-label="Aprov.">45%</span>
+        <span class="num" data-label="Quest.">1.010</span>
+        <span class="num" data-label="Tempo">44min</span>
+        <div class="bar"><i style="width:45%"></i></div>
+      </div>
+      <div class="mission-row">
+        <div class="name">PF <small>Polícia Federal</small></div>
+        <span class="num" data-label="Aprov.">30%</span>
+        <span class="num" data-label="Quest.">760</span>
+        <span class="num" data-label="Tempo">47min</span>
+        <div class="bar"><i style="width:30%"></i></div>
       </div>
     </div>
   </div>
@@ -430,71 +391,29 @@
 <section id="missoes">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">Operações</div>
-      <h2>Suas matérias são operações.</h2>
-      <p>Cada disciplina é tratada como uma missão estratégica, com progresso, tempo e recompensa em XP.</p>
-    </div>
-    <div class="missions-grid">
-      <div class="mission-card">
-        <div class="tag">Operação</div>
-        <h4>Constituição</h4>
-        <div class="meta"><span>42 min</span><span>60 questões</span><span>+320 XP</span></div>
-        <div class="progress" style="--p:74"><i style="width:74%"></i></div>
-      </div>
-      <div class="mission-card">
-        <div class="tag">Operação</div>
-        <h4>Penal</h4>
-        <div class="meta"><span>35 min</span><span>48 questões</span><span>+260 XP</span></div>
-        <div class="progress"><i style="width:52%"></i></div>
-      </div>
-      <div class="mission-card">
-        <div class="tag">Operação</div>
-        <h4>Português</h4>
-        <div class="meta"><span>28 min</span><span>40 questões</span><span>+210 XP</span></div>
-        <div class="progress"><i style="width:88%"></i></div>
-      </div>
-      <div class="mission-card">
-        <div class="tag">Operação</div>
-        <h4>Informática</h4>
-        <div class="meta"><span>20 min</span><span>30 questões</span><span>+150 XP</span></div>
-        <div class="progress"><i style="width:33%"></i></div>
-      </div>
-      <div class="mission-card">
-        <div class="tag">Operação</div>
-        <h4>Matemática</h4>
-        <div class="meta"><span>30 min</span><span>35 questões</span><span>+180 XP</span></div>
-        <div class="progress"><i style="width:19%"></i></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="questoes">
-  <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Banco de Questões</div>
-      <h2>Escolha seu concurso. Avance na missão.</h2>
+      <h2>Cada disciplina, uma operação com prazo e recompensa.</h2>
+      <p>Progresso, tempo estimado e XP claros antes de você começar.</p>
     </div>
     <div class="exam-grid">
       <div class="exam-card">
-        <h4>PMMA</h4>
-        <div class="ring" style="--p:82"><span>82%</span></div>
-        <div class="cta">Continuar Missão →</div>
+        <div class="top"><h4>Constituição</h4><span class="pct tnum">74%</span></div>
+        <div class="bar"><i style="width:74%"></i></div>
+        <div class="cta">60 questões · 42min · +320 XP</div>
       </div>
       <div class="exam-card">
-        <h4>CBMMA</h4>
-        <div class="ring" style="--p:61"><span>61%</span></div>
-        <div class="cta">Continuar Missão →</div>
+        <div class="top"><h4>Penal</h4><span class="pct tnum">52%</span></div>
+        <div class="bar"><i style="width:52%"></i></div>
+        <div class="cta">48 questões · 35min · +260 XP</div>
       </div>
       <div class="exam-card">
-        <h4>PRF</h4>
-        <div class="ring" style="--p:45"><span>45%</span></div>
-        <div class="cta">Continuar Missão →</div>
+        <div class="top"><h4>Português</h4><span class="pct tnum">88%</span></div>
+        <div class="bar"><i style="width:88%"></i></div>
+        <div class="cta">40 questões · 28min · +210 XP</div>
       </div>
       <div class="exam-card">
-        <h4>PF</h4>
-        <div class="ring" style="--p:30"><span>30%</span></div>
-        <div class="cta">Continuar Missão →</div>
+        <div class="top"><h4>Informática</h4><span class="pct tnum">33%</span></div>
+        <div class="bar"><i style="width:33%"></i></div>
+        <div class="cta">30 questões · 20min · +150 XP</div>
       </div>
     </div>
   </div>
@@ -503,26 +422,27 @@
 <section id="patentes">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">Gamificação</div>
-      <h2>Sua evolução tem patente.</h2>
-      <p>Do Civil ao General — cada conquista te aproxima da próxima insígnia.</p>
+      <h2>Sua evolução tem hierarquia.</h2>
+      <p>Do Civil ao General — cada patente é conquistada com XP acumulado em estudo real.</p>
     </div>
-    <div class="ranks-strip">
-      <div class="rank-chip"><div class="insig">🎖</div><b>Civil</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>Recruta</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>Soldado</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>Cabo</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>3º Sargento</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>2º Sargento</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>1º Sargento</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>Subtenente</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>Aspirante</b></div>
-      <div class="rank-chip"><div class="insig">🎖</div><b>Tenente</b></div>
-      <div class="rank-chip" style="border-color:var(--gold)"><div class="insig">🎖</div><b>Capitão (você)</b></div>
-      <div class="rank-chip locked"><div class="insig">🎖</div><b>Major</b></div>
-      <div class="rank-chip locked"><div class="insig">🎖</div><b>Tenente Coronel</b></div>
-      <div class="rank-chip locked"><div class="insig">🎖</div><b>Coronel</b></div>
-      <div class="rank-chip locked"><div class="insig">🎖</div><b>General</b></div>
+    <div class="ladder">
+      <div class="ladder-scroll">
+        <div class="rung done"><span class="idx mono">01</span><span class="tick"></span><span class="name">Civil</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">02</span><span class="tick"></span><span class="name">Recruta</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">03</span><span class="tick"></span><span class="name">Soldado</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">04</span><span class="tick"></span><span class="name">Cabo</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">05</span><span class="tick"></span><span class="name">3º Sargento</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">06</span><span class="tick"></span><span class="name">2º Sargento</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">07</span><span class="tick"></span><span class="name">1º Sargento</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">08</span><span class="tick"></span><span class="name">Subtenente</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">09</span><span class="tick"></span><span class="name">Aspirante</span><span class="status">Concluída</span></div>
+        <div class="rung done"><span class="idx mono">10</span><span class="tick"></span><span class="name">Tenente</span><span class="status">Concluída</span></div>
+        <div class="rung current"><span class="idx mono">11</span><span class="tick"></span><span class="name">Capitão</span><span class="status">Patente atual</span></div>
+        <div class="rung locked"><span class="idx mono">12</span><span class="tick"></span><span class="name">Major</span><span class="status">6.200 XP restantes</span></div>
+        <div class="rung locked"><span class="idx mono">13</span><span class="tick"></span><span class="name">Tenente Coronel</span><span class="status">Bloqueada</span></div>
+        <div class="rung locked"><span class="idx mono">14</span><span class="tick"></span><span class="name">Coronel</span><span class="status">Bloqueada</span></div>
+        <div class="rung locked"><span class="idx mono">15</span><span class="tick"></span><span class="name">General</span><span class="status">Bloqueada</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -531,22 +451,22 @@
   <div class="container">
     <div class="ai-panel">
       <div class="ai-copy">
-        <div class="eyebrow">Force AI</div>
+        <div class="label">Force AI</div>
         <h3>Sua inteligência tática pessoal.</h3>
-        <p>Integrada ao sistema, a Force AI entende seu edital, seu desempenho e sua rotina — e age como sua equipe de inteligência particular.</p>
+        <p>Integrada ao painel, a Force AI conhece seu edital, seu desempenho e sua rotina — e age como sua equipe de inteligência particular.</p>
         <ul>
           <li>Explica qualquer assunto do edital</li>
-          <li>Cria questões e resumos sob medida</li>
-          <li>Gera flashcards e revisões automáticas</li>
+          <li>Gera questões e resumos sob medida</li>
+          <li>Cria flashcards e revisões automáticas</li>
           <li>Monta seu cronograma de estudo</li>
-          <li>Analisa seu desempenho e aponta falhas</li>
+          <li>Aponta falhas no seu desempenho</li>
         </ul>
       </div>
       <div class="ai-chat">
         <div class="msg user">Analise meu desempenho em Direito Penal.</div>
-        <div class="msg ai">Sua precisão caiu 12% em Crimes contra a Administração. Recomendo revisão tática hoje + 15 questões focadas.</div>
+        <div class="msg ai">Precisão caiu 12% em Crimes contra a Administração. Revisão + 15 questões focadas recomendadas para hoje.</div>
         <div class="msg user">Monte uma revisão para amanhã.</div>
-        <div class="msg ai">Revisão criada: Constituição (30min), Penal (25min), 40 questões mistas. +180 XP ao concluir.</div>
+        <div class="msg ai">Revisão criada: Constituição 30min · Penal 25min · 40 questões mistas · +180 XP ao concluir.</div>
       </div>
     </div>
   </div>
@@ -555,60 +475,47 @@
 <section id="honra">
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">Hall da Honra</div>
       <h2>Operadores que cumpriram a missão.</h2>
+      <p>Aprovações reais, registradas no Hall da Honra.</p>
     </div>
     <div class="honor-grid">
       <div class="honor-card">
-        <div class="honor-photo"></div>
-        <div class="honor-body">
-          <div class="badge">PMMA · 2025</div>
-          <h4>Rafael A.</h4>
-          <p>"A disciplina da plataforma virou minha rotina. A aprovação foi consequência."</p>
-        </div>
+        <div class="honor-avatar">RA</div>
+        <div class="badge">PMMA · 2025</div>
+        <h4>Rafael A.</h4>
+        <p>"A disciplina do painel virou minha rotina. A aprovação foi consequência."</p>
       </div>
       <div class="honor-card">
-        <div class="honor-photo"></div>
-        <div class="honor-body">
-          <div class="badge">PRF · 2025</div>
-          <h4>Camila S.</h4>
-          <p>"O sistema de missões me manteve constante nos 300 dias de preparação."</p>
-        </div>
+        <div class="honor-avatar">CS</div>
+        <div class="badge">PRF · 2025</div>
+        <h4>Camila S.</h4>
+        <p>"O sistema de missões me manteve constante nos 300 dias de preparação."</p>
       </div>
       <div class="honor-card">
-        <div class="honor-photo"></div>
-        <div class="honor-body">
-          <div class="badge">CBMMA · 2024</div>
-          <h4>Diego M.</h4>
-          <p>"Força Academy não parece um curso. Parece um centro de comando real."</p>
-        </div>
+        <div class="honor-avatar">DM</div>
+        <div class="badge">CBMMA · 2024</div>
+        <h4>Diego M.</h4>
+        <p>"Parece um sistema de comando real, não um curso qualquer."</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== DEVICE SHOWCASE ===================== -->
-<section id="showcase" class="showcase">
+<section id="showcase" style="border-bottom:none;">
   <div class="container">
-    <div class="section-head">
-      <div class="eyebrow">Experiência Multiplataforma</div>
-      <h2>A mesma experiência. Em qualquer dispositivo.</h2>
-      <p>A Force Academy foi projetada desde o início para oferecer uma experiência premium tanto no computador quanto no celular. Alterne entre as visualizações e conheça cada detalhe da plataforma.</p>
+    <div class="section-head" style="justify-content:center; text-align:center; flex-direction:column; align-items:center;">
+      <h2>A mesma experiência, em qualquer dispositivo.</h2>
+      <p style="max-width:480px;">Projetada desde o início para computador e celular. Alterne abaixo e veja o painel em cada formato.</p>
     </div>
 
     <div class="device-switch">
       <div class="switch-track">
-        <button class="switch-btn active" id="btn-mobile" onclick="setDevice('mobile')">
-          <span class="glow"></span> 📱 Aplicativo
-        </button>
-        <button class="switch-btn" id="btn-desktop" onclick="setDevice('desktop')">
-          <span class="glow"></span> 💻 Computador / Tablet
-        </button>
+        <button class="switch-btn active" id="btn-mobile" onclick="setDevice('mobile')"><span class="glow"></span>Aplicativo</button>
+        <button class="switch-btn" id="btn-desktop" onclick="setDevice('desktop')"><span class="glow"></span>Computador / Tablet</button>
       </div>
     </div>
 
     <div class="stage">
-      <!-- PHONE -->
       <div class="device phone shown" id="device-phone">
         <div class="phone-body">
           <div class="phone-notch"></div>
@@ -625,7 +532,7 @@
                 <div class="mini-navbar"><i class="on"></i><i></i><i></i><i></i></div>
               </div>
               <div class="scr" data-i="1">
-                <div class="mini-phone-top"><div class="greet">Missão do Dia</div><div class="name">Operação Constituição</div></div>
+                <div class="mini-phone-top"><div class="greet">Missão do Dia</div><div class="name">Constituição</div></div>
                 <div class="mini-phone-body">
                   <div class="mini-row"><span>Progresso</span><b>74%</b></div>
                   <div class="mini-row"><span>Questões</span><b>60</b></div>
@@ -655,10 +562,8 @@
         </div>
       </div>
 
-      <!-- LAPTOP -->
       <div class="device laptop hidden-right" id="device-laptop">
         <div class="laptop-screen">
-          <div class="laptop-cam"></div>
           <div class="screen-frame">
             <div class="screen-crossfade" id="desktop-screens">
               <div class="scr on" data-i="0">
@@ -687,7 +592,7 @@
                 </div>
               </div>
               <div class="scr" data-i="3">
-                <div class="mini-top"><div class="brand">RANKING & HALL DA HONRA</div><div class="dot"></div></div>
+                <div class="mini-top"><div class="brand">RANKING & HONRA</div><div class="dot"></div></div>
                 <div class="mini-body">
                   <div class="mini-tile"><span>Nacional</span><b>#2</b></div>
                   <div class="mini-tile"><span>Estadual</span><b>#1</b></div>
@@ -702,19 +607,26 @@
     </div>
 
     <div class="screen-dots" id="dots"></div>
-
     <div class="showcase-caption">Alternando entre <b>Aplicativo</b> e <b>Computador / Tablet</b> — mesma identidade, mesma qualidade.</div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <div class="logo"><div class="mark">F</div> FORCE ACADEMY</div>
-    <div>Centro Inteligente de Preparação Militar. Elite. Estratégia. Disciplina. Tecnologia.</div>
+    <div class="logo mono">FORCE ACADEMY</div>
+    <div>Centro operacional de preparação militar e policial.</div>
   </div>
 </footer>
 
 <script>
+  function toggleTheme(){
+    const root = document.documentElement;
+    const current = root.getAttribute('data-theme');
+    const isDark = current ? current === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeBtn').textContent = isDark ? '◑' : '◐';
+  }
+
   let current = 'mobile';
   let screenIndex = 0;
   const totalScreens = 4;
@@ -728,19 +640,13 @@
     const btnDesktop = document.getElementById('btn-desktop');
 
     if(mode === 'mobile'){
-      phone.classList.remove('hidden-left','hidden-right');
-      phone.classList.add('shown');
-      laptop.classList.remove('shown','hidden-left');
-      laptop.classList.add('hidden-right');
-      btnMobile.classList.add('active');
-      btnDesktop.classList.remove('active');
+      phone.classList.remove('hidden-left','hidden-right'); phone.classList.add('shown');
+      laptop.classList.remove('shown','hidden-left'); laptop.classList.add('hidden-right');
+      btnMobile.classList.add('active'); btnDesktop.classList.remove('active');
     } else {
-      laptop.classList.remove('hidden-left','hidden-right');
-      laptop.classList.add('shown');
-      phone.classList.remove('shown','hidden-right');
-      phone.classList.add('hidden-left');
-      btnDesktop.classList.add('active');
-      btnMobile.classList.remove('active');
+      laptop.classList.remove('hidden-left','hidden-right'); laptop.classList.add('shown');
+      phone.classList.remove('shown','hidden-right'); phone.classList.add('hidden-left');
+      btnDesktop.classList.add('active'); btnMobile.classList.remove('active');
     }
   }
 
@@ -764,7 +670,7 @@
   }
 
   renderDots();
-  setInterval(()=>{ goToScreen((screenIndex+1) % totalScreens); }, 4000);
+  setInterval(()=>{ goToScreen((screenIndex+1) % totalScreens); }, 4500);
 </script>
 
 </body>
