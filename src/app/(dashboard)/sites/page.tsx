@@ -1,12 +1,19 @@
-import { Globe } from "lucide-react";
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { createClient } from "@/lib/supabase/server";
+import { SitesTable } from "@/components/sites/sites-table";
 
-export default function SitesPage() {
-  return (
-    <ComingSoon
-      icon={Globe}
-      title="Sites"
-      description="Todos os sites cadastrados e sob sua gestão."
-    />
-  );
+export const dynamic = "force-dynamic";
+
+export default async function SitesPage() {
+  const supabase = await createClient();
+
+  const [{ data: sites, error }, { data: empresas }] = await Promise.all([
+    supabase.from("sites").select("*").order("created_at", { ascending: false }),
+    supabase.from("empresas").select("id, nome").order("nome"),
+  ]);
+
+  if (error) {
+    console.error("Erro ao carregar sites", error.message);
+  }
+
+  return <SitesTable initialSites={sites ?? []} empresas={empresas ?? []} />;
 }
