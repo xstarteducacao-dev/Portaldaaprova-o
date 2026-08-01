@@ -100,7 +100,7 @@ export async function getDashboardData(): Promise<DashboardData> {
       supabase
         .from("projetos")
         .select("*", { count: "exact", head: true })
-        .eq("status", "ativo") as unknown as Promise<{ count: number | null; error: unknown }>
+        .eq("status", "em_andamento") as unknown as Promise<{ count: number | null; error: unknown }>
     ),
     safeCount(
       supabase
