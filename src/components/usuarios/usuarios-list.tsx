@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/select";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
-import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { UsuarioFormDialog } from "./usuario-form-dialog";
 import { ConvidarUsuarioDialog } from "./convidar-usuario-dialog";
@@ -57,10 +56,10 @@ export function UsuariosList({ initialProfiles }: { initialProfiles: Profile[] }
 
   async function handleDelete() {
     if (!deleteTarget) return;
-    const supabase = createClient();
-    const { error } = await supabase.from("profiles").delete().eq("id", deleteTarget.id);
-    if (error) {
-      toast.error("Não foi possível remover o usuário", { description: error.message });
+    const res = await fetch(`/api/usuarios/${deleteTarget.id}`, { method: "DELETE" });
+    if (!res.ok) {
+      const result = await res.json().catch(() => ({}));
+      toast.error("Não foi possível remover o usuário", { description: result.error });
       return;
     }
     toast.success("Usuário removido");
@@ -190,7 +189,7 @@ export function UsuariosList({ initialProfiles }: { initialProfiles: Profile[] }
         open={Boolean(deleteTarget)}
         onOpenChange={(open) => !open && setDeleteTarget(null)}
         title="Remover usuário"
-        description={`Isso remove o registro de perfil de "${deleteTarget?.nome}". Atenção: a conta de autenticação (auth.users) não é removida por esta ação — isso requer a API administrativa do Supabase.`}
+        description={`Isso remove permanentemente a conta de "${deleteTarget?.nome}", incluindo o acesso de autenticação. Essa ação não pode ser desfeita.`}
         confirmLabel="Remover"
         onConfirm={handleDelete}
       />
