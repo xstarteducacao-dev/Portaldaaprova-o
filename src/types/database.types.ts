@@ -106,6 +106,12 @@ export type PrioridadeChamado = "baixa" | "media" | "alta" | "urgente";
 
 export type StatusChamado = "aberto" | "em_andamento" | "resolvido" | "fechado";
 
+export type StatusConta = "em_aberto" | "pago" | "atrasado";
+
+export type FormaPagamento = "pix" | "boleto" | "cartao" | "dinheiro";
+
+export type TipoCategoriaFinanceira = "receita" | "despesa";
+
 export interface Database {
   public: {
     Tables: {
@@ -502,6 +508,108 @@ export interface Database {
         };
         Relationships: [];
       };
+      contas_receber: {
+        Row: {
+          id: string;
+          cliente_id: string | null;
+          descricao: string;
+          valor: number;
+          vencimento: string;
+          status: StatusConta;
+          forma_pagamento: FormaPagamento | null;
+          parcelas: number;
+          parcela_atual: number;
+          data_pagamento: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          cliente_id?: string | null;
+          descricao: string;
+          valor: number;
+          vencimento: string;
+          status?: StatusConta;
+          forma_pagamento?: FormaPagamento | null;
+          parcelas?: number;
+          parcela_atual?: number;
+          data_pagamento?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          cliente_id?: string | null;
+          descricao?: string;
+          valor?: number;
+          vencimento?: string;
+          status?: StatusConta;
+          forma_pagamento?: FormaPagamento | null;
+          parcelas?: number;
+          parcela_atual?: number;
+          data_pagamento?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      contas_pagar: {
+        Row: {
+          id: string;
+          fornecedor: string;
+          categoria_id: string | null;
+          descricao: string;
+          valor: number;
+          vencimento: string;
+          status: StatusConta;
+          data_pagamento: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          fornecedor: string;
+          categoria_id?: string | null;
+          descricao: string;
+          valor: number;
+          vencimento: string;
+          status?: StatusConta;
+          data_pagamento?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          fornecedor?: string;
+          categoria_id?: string | null;
+          descricao?: string;
+          valor?: number;
+          vencimento?: string;
+          status?: StatusConta;
+          data_pagamento?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      categorias_financeiras: {
+        Row: {
+          id: string;
+          nome: string;
+          tipo: TipoCategoriaFinanceira;
+        };
+        Insert: {
+          id?: string;
+          nome: string;
+          tipo: TipoCategoriaFinanceira;
+        };
+        Update: {
+          id?: string;
+          nome?: string;
+          tipo?: TipoCategoriaFinanceira;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -520,6 +628,9 @@ export interface Database {
       status_sistema: StatusSistema;
       prioridade_chamado: PrioridadeChamado;
       status_chamado: StatusChamado;
+      status_conta: StatusConta;
+      forma_pagamento: FormaPagamento;
+      tipo_categoria_financeira: TipoCategoriaFinanceira;
     };
     CompositeTypes: Record<string, never>;
   };
