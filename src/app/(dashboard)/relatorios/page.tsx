@@ -1,12 +1,5 @@
-import { FileBarChart } from "lucide-react";
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { RelatoriosView } from "@/components/relatorios/relatorios-view";
 
 export default function RelatoriosPage() {
-  return (
-    <ComingSoon
-      icon={FileBarChart}
-      title="Relatórios"
-      description="Exporte dados de receitas, clientes, consultorias, projetos e marketing."
-    />
-  );
+  return <RelatoriosView />;
 }
