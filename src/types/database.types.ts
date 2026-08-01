@@ -22,6 +22,33 @@ export type StatusLead =
   | "cliente"
   | "perdido";
 
+export type FormatoConsultoria = "online" | "presencial";
+
+export type StatusConsultoria = "agendada" | "realizada" | "cancelada";
+
+export interface EmpresaContato {
+  nome: string;
+  cargo?: string;
+  telefone?: string;
+  email?: string;
+}
+
+export interface EmpresaRedesSociais {
+  instagram?: string;
+  facebook?: string;
+  linkedin?: string;
+  site?: string;
+}
+
+export interface EmpresaEndereco {
+  cep?: string;
+  logradouro?: string;
+  numero?: string;
+  bairro?: string;
+  cidade?: string;
+  uf?: string;
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -106,12 +133,122 @@ export interface Database {
         };
         Relationships: [];
       };
+      empresas: {
+        Row: {
+          id: string;
+          nome: string;
+          razao_social: string | null;
+          cnpj: string | null;
+          contatos: EmpresaContato[] | null;
+          redes_sociais: EmpresaRedesSociais | null;
+          endereco: EmpresaEndereco | null;
+          segmento: string | null;
+          funcionarios: string | null;
+          observacoes: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          nome: string;
+          razao_social?: string | null;
+          cnpj?: string | null;
+          contatos?: EmpresaContato[] | null;
+          redes_sociais?: EmpresaRedesSociais | null;
+          endereco?: EmpresaEndereco | null;
+          segmento?: string | null;
+          funcionarios?: string | null;
+          observacoes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          nome?: string;
+          razao_social?: string | null;
+          cnpj?: string | null;
+          contatos?: EmpresaContato[] | null;
+          redes_sociais?: EmpresaRedesSociais | null;
+          endereco?: EmpresaEndereco | null;
+          segmento?: string | null;
+          funcionarios?: string | null;
+          observacoes?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      consultorias: {
+        Row: {
+          id: string;
+          empresa_id: string | null;
+          empresa_nome: string;
+          consultor_id: string | null;
+          data_hora: string;
+          formato: FormatoConsultoria;
+          status: StatusConsultoria;
+          diagnostico: string | null;
+          branding: string | null;
+          posicionamento: string | null;
+          marketing: string | null;
+          pontos_fortes: string | null;
+          pontos_fracos: string | null;
+          oportunidades: string | null;
+          ameacas: string | null;
+          plano_estrategico: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          empresa_id?: string | null;
+          empresa_nome: string;
+          consultor_id?: string | null;
+          data_hora: string;
+          formato?: FormatoConsultoria;
+          status?: StatusConsultoria;
+          diagnostico?: string | null;
+          branding?: string | null;
+          posicionamento?: string | null;
+          marketing?: string | null;
+          pontos_fortes?: string | null;
+          pontos_fracos?: string | null;
+          oportunidades?: string | null;
+          ameacas?: string | null;
+          plano_estrategico?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          empresa_id?: string | null;
+          empresa_nome?: string;
+          consultor_id?: string | null;
+          data_hora?: string;
+          formato?: FormatoConsultoria;
+          status?: StatusConsultoria;
+          diagnostico?: string | null;
+          branding?: string | null;
+          posicionamento?: string | null;
+          marketing?: string | null;
+          pontos_fortes?: string | null;
+          pontos_fracos?: string | null;
+          oportunidades?: string | null;
+          ameacas?: string | null;
+          plano_estrategico?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
       perfil_usuario: PerfilUsuario;
       status_lead: StatusLead;
+      formato_consultoria: FormatoConsultoria;
+      status_consultoria: StatusConsultoria;
     };
     CompositeTypes: Record<string, never>;
   };

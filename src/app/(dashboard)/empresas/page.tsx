@@ -1,12 +1,18 @@
-import { Building2 } from "lucide-react";
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { createClient } from "@/lib/supabase/server";
+import { EmpresasList } from "@/components/empresas/empresas-list";
 
-export default function EmpresasPage() {
-  return (
-    <ComingSoon
-      icon={Building2}
-      title="Empresas"
-      description="Cadastro completo dos seus clientes e prospects."
-    />
-  );
+export const dynamic = "force-dynamic";
+
+export default async function EmpresasPage() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("empresas")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Erro ao carregar empresas", error.message);
+  }
+
+  return <EmpresasList initialEmpresas={data ?? []} />;
 }
