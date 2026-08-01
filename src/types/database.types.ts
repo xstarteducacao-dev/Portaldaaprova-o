@@ -78,6 +78,34 @@ export interface EmpresaEndereco {
   uf?: string;
 }
 
+export type TipoCampanha =
+  | "google_ads"
+  | "meta_ads"
+  | "landing_pages"
+  | "social_media"
+  | "seo"
+  | "email_marketing";
+
+export type StatusCampanha = "planejamento" | "ativa" | "pausada" | "concluida";
+
+export interface CampanhaResultados {
+  impressoes?: number;
+  cliques?: number;
+  conversoes?: number;
+  leads_gerados?: number;
+  observacoes?: string;
+}
+
+export type SslStatus = "ativo" | "pendente" | "expirado";
+
+export type StatusSite = "online" | "manutencao" | "offline";
+
+export type StatusSistema = "producao" | "desenvolvimento" | "descontinuado";
+
+export type PrioridadeChamado = "baixa" | "media" | "alta" | "urgente";
+
+export type StatusChamado = "aberto" | "em_andamento" | "resolvido" | "fechado";
+
 export interface Database {
   public: {
     Tables: {
@@ -324,6 +352,156 @@ export interface Database {
         };
         Relationships: [];
       };
+      campanhas: {
+        Row: {
+          id: string;
+          cliente_id: string | null;
+          nome: string;
+          tipo: TipoCampanha;
+          objetivo: string | null;
+          investimento: number;
+          status: StatusCampanha;
+          data_inicio: string;
+          data_fim: string | null;
+          resultados: CampanhaResultados | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          cliente_id?: string | null;
+          nome: string;
+          tipo: TipoCampanha;
+          objetivo?: string | null;
+          investimento?: number;
+          status?: StatusCampanha;
+          data_inicio: string;
+          data_fim?: string | null;
+          resultados?: CampanhaResultados | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          cliente_id?: string | null;
+          nome?: string;
+          tipo?: TipoCampanha;
+          objetivo?: string | null;
+          investimento?: number;
+          status?: StatusCampanha;
+          data_inicio?: string;
+          data_fim?: string | null;
+          resultados?: CampanhaResultados | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      sites: {
+        Row: {
+          id: string;
+          cliente_id: string | null;
+          dominio: string;
+          hospedagem: string | null;
+          ssl: SslStatus;
+          status: StatusSite;
+          ultima_atualizacao: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          cliente_id?: string | null;
+          dominio: string;
+          hospedagem?: string | null;
+          ssl?: SslStatus;
+          status?: StatusSite;
+          ultima_atualizacao?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          cliente_id?: string | null;
+          dominio?: string;
+          hospedagem?: string | null;
+          ssl?: SslStatus;
+          status?: StatusSite;
+          ultima_atualizacao?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      sistemas: {
+        Row: {
+          id: string;
+          cliente_id: string | null;
+          sistema: string;
+          versao: string | null;
+          status: StatusSistema;
+          documentacao_url: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          cliente_id?: string | null;
+          sistema: string;
+          versao?: string | null;
+          status?: StatusSistema;
+          documentacao_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          cliente_id?: string | null;
+          sistema?: string;
+          versao?: string | null;
+          status?: StatusSistema;
+          documentacao_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      chamados: {
+        Row: {
+          id: string;
+          sistema_id: string;
+          titulo: string;
+          descricao: string | null;
+          prioridade: PrioridadeChamado;
+          status: StatusChamado;
+          aberto_por: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          sistema_id: string;
+          titulo: string;
+          descricao?: string | null;
+          prioridade?: PrioridadeChamado;
+          status?: StatusChamado;
+          aberto_por?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          sistema_id?: string;
+          titulo?: string;
+          descricao?: string | null;
+          prioridade?: PrioridadeChamado;
+          status?: StatusChamado;
+          aberto_por?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -335,6 +513,13 @@ export interface Database {
       tipo_projeto: TipoProjeto;
       status_projeto: StatusProjeto;
       prioridade_projeto: PrioridadeProjeto;
+      tipo_campanha: TipoCampanha;
+      status_campanha: StatusCampanha;
+      ssl_status: SslStatus;
+      status_site: StatusSite;
+      status_sistema: StatusSistema;
+      prioridade_chamado: PrioridadeChamado;
+      status_chamado: StatusChamado;
     };
     CompositeTypes: Record<string, never>;
   };
