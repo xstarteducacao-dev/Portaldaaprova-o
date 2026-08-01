@@ -26,6 +26,35 @@ export type FormatoConsultoria = "online" | "presencial";
 
 export type StatusConsultoria = "agendada" | "realizada" | "cancelada";
 
+export type TipoProjeto =
+  | "site"
+  | "landing_page"
+  | "sistema"
+  | "trafego_pago"
+  | "branding"
+  | "social_media"
+  | "consultoria"
+  | "seo"
+  | "automacao";
+
+export type StatusProjeto = "a_fazer" | "em_andamento" | "em_revisao" | "concluido";
+
+export type PrioridadeProjeto = "baixa" | "media" | "alta" | "urgente";
+
+export interface ProjetoChecklistItem {
+  id: string;
+  texto: string;
+  concluido: boolean;
+}
+
+export interface ProjetoComentario {
+  id: string;
+  autor_id: string;
+  autor_nome: string;
+  texto: string;
+  criado_em: string;
+}
+
 export interface EmpresaContato {
   nome: string;
   cargo?: string;
@@ -241,6 +270,60 @@ export interface Database {
         };
         Relationships: [];
       };
+      projetos: {
+        Row: {
+          id: string;
+          nome: string;
+          cliente_id: string | null;
+          responsavel_id: string | null;
+          equipe: string[];
+          tipo: TipoProjeto;
+          status: StatusProjeto;
+          prioridade: PrioridadeProjeto;
+          prazo: string | null;
+          progresso: number;
+          descricao: string | null;
+          checklist: ProjetoChecklistItem[];
+          comentarios: ProjetoComentario[];
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          nome: string;
+          cliente_id?: string | null;
+          responsavel_id?: string | null;
+          equipe?: string[];
+          tipo: TipoProjeto;
+          status?: StatusProjeto;
+          prioridade?: PrioridadeProjeto;
+          prazo?: string | null;
+          progresso?: number;
+          descricao?: string | null;
+          checklist?: ProjetoChecklistItem[];
+          comentarios?: ProjetoComentario[];
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          nome?: string;
+          cliente_id?: string | null;
+          responsavel_id?: string | null;
+          equipe?: string[];
+          tipo?: TipoProjeto;
+          status?: StatusProjeto;
+          prioridade?: PrioridadeProjeto;
+          prazo?: string | null;
+          progresso?: number;
+          descricao?: string | null;
+          checklist?: ProjetoChecklistItem[];
+          comentarios?: ProjetoComentario[];
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
@@ -249,6 +332,9 @@ export interface Database {
       status_lead: StatusLead;
       formato_consultoria: FormatoConsultoria;
       status_consultoria: StatusConsultoria;
+      tipo_projeto: TipoProjeto;
+      status_projeto: StatusProjeto;
+      prioridade_projeto: PrioridadeProjeto;
     };
     CompositeTypes: Record<string, never>;
   };
